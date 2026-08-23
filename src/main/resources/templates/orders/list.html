@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My Orders | StockFlow</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body class="management-page order-page">
+
+<main class="dashboard-wrapper">
+  <section class="mac-window management-window">
+
+    <header class="mac-toolbar">
+      <div class="window-controls">
+        <span class="control close-control"></span>
+        <span class="control minimise-control"></span>
+        <span class="control maximise-control"></span>
+      </div>
+
+      <a class="dashboard-logo" th:href="@{/}">
+                <span class="logo-icon">
+                    <i class="bi bi-box-seam"></i>
+                </span>
+        <span>StockFlow</span>
+      </a>
+
+      <nav class="dashboard-nav">
+        <a class="nav-pill" th:href="@{/}">Dashboard</a>
+        <a class="nav-pill" th:href="@{/catalog}">Catalogue</a>
+        <a class="nav-pill active" th:href="@{/orders}">
+          My Orders
+        </a>
+      </nav>
+
+      <a class="toolbar-button"
+         th:href="@{/}"
+         title="Dashboard">
+        <i class="bi bi-house"></i>
+      </a>
+    </header>
+
+    <div class="dashboard-content">
+
+      <section class="management-header">
+        <div>
+          <p class="eyebrow">ORDER HISTORY</p>
+          <h1>My Orders</h1>
+          <p>
+            Review your confirmed inventory transactions.
+          </p>
+        </div>
+
+        <a th:href="@{/catalog}"
+           class="modern-primary-button">
+          <i class="bi bi-plus-lg"></i>
+          New Order
+        </a>
+      </section>
+
+      <section class="data-panel order-list-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">TRANSACTION RECORDS</p>
+            <h3>Confirmed Orders</h3>
+          </div>
+
+          <span class="record-count">
+                        <i class="bi bi-receipt"></i>
+                        <span th:text="${#lists.size(orders)}">0</span>
+                        records
+                    </span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="modern-table order-table">
+            <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="order : ${orders}">
+              <td>
+                                <span class="order-number"
+                                      th:text="${order.orderNumber}">
+                                    ORD-00000000
+                                </span>
+              </td>
+
+              <td>
+                <div class="table-name">
+                                    <span class="table-icon order-table-icon">
+                                        <i class="bi bi-box"></i>
+                                    </span>
+
+                  <div class="product-name-cell">
+                    <strong th:text="${order.product.name}">
+                      Product
+                    </strong>
+
+                    <small th:text="${order.product.sku}">
+                      SKU
+                    </small>
+                  </div>
+                </div>
+              </td>
+
+              <td th:text="${order.quantity}">
+                1
+              </td>
+
+              <td class="order-total"
+                  th:text="'Rs. ' + ${#numbers.formatDecimal(order.totalPrice, 1, 2)}">
+                Rs. 0.00
+              </td>
+
+              <td th:text="${order.createdAt}">
+                Date
+              </td>
+
+              <td>
+                                <span class="order-status">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                    <span th:text="${order.status}">
+                                        CONFIRMED
+                                    </span>
+                                </span>
+              </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(orders)}">
+              <td colspan="6">
+                <div class="empty-state">
+                                    <span>
+                                        <i class="bi bi-receipt"></i>
+                                    </span>
+
+                  <h4>No orders yet</h4>
+
+                  <p>
+                    Select a product from the catalogue
+                    to create your first order.
+                  </p>
+
+                  <a th:href="@{/catalog}"
+                     class="modern-primary-button">
+                    Browse Catalogue
+                  </a>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>

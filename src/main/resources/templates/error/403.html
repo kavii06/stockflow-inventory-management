@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Denied | StockFlow</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            color: #201b2c;
+            background:
+                    radial-gradient(circle at 15% 15%, #d9ff91 0, transparent 34%),
+                    radial-gradient(circle at 85% 80%, #8f63ff 0, transparent 38%),
+                    linear-gradient(135deg, #f6f1ff, #ddd3ff);
+        }
+
+        .window {
+            width: min(1100px, 100%);
+            min-height: 680px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,.75);
+            border-radius: 28px;
+            background: rgba(255,255,255,.92);
+            box-shadow: 0 30px 80px rgba(50, 35, 90, .22);
+            animation: appear .6s ease;
+        }
+
+        .top-bar {
+            height: 88px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            border-bottom: 1px solid #eeeaf4;
+        }
+
+        .brand-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 8px;
+        }
+
+        .traffic-lights span {
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+        }
+
+        .red { background: #f16b61; }
+        .yellow { background: #f2bf4f; }
+        .green { background: #62bf59; }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            color: white;
+            font-size: 22px;
+            background: linear-gradient(135deg, #7c4be8, #4c278f);
+            box-shadow: 0 10px 22px rgba(113, 66, 210, .28);
+        }
+
+        .brand {
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .role-badge {
+            padding: 11px 17px;
+            border-radius: 999px;
+            color: #6940b2;
+            background: #f1eaff;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .content {
+            min-height: 590px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 55px 25px;
+            text-align: center;
+        }
+
+        .error-card {
+            width: min(610px, 100%);
+            padding: 52px 45px;
+            border: 1px solid #eee8f5;
+            border-radius: 26px;
+            background: white;
+            box-shadow: 0 22px 55px rgba(47, 33, 75, .12);
+        }
+
+        .lock {
+            width: 88px;
+            height: 88px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 25px;
+            border-radius: 26px;
+            color: white;
+            font-size: 39px;
+            background: linear-gradient(145deg, #8d5bed, #4e298d);
+            box-shadow: 0 18px 35px rgba(99, 54, 179, .30);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .code {
+            margin-bottom: 8px;
+            color: #7547c2;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        h1 {
+            margin-bottom: 14px;
+            font-size: clamp(34px, 5vw, 48px);
+        }
+
+        .message {
+            max-width: 470px;
+            margin: 0 auto;
+            color: #777080;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .notice {
+            margin: 28px 0;
+            padding: 16px;
+            border-radius: 15px;
+            color: #704e35;
+            background: #fff5e8;
+            font-size: 14px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 14px 23px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .25s ease;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #8053df, #58309c);
+            box-shadow: 0 10px 25px rgba(93, 48, 167, .25);
+        }
+
+        .secondary {
+            color: #4f465d;
+            background: #f1eef5;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(15px) scale(.98);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+
+        @media (max-width: 650px) {
+            .window {
+                min-height: auto;
+            }
+
+            .top-bar {
+                padding: 0 18px;
+            }
+
+            .traffic-lights,
+            .role-badge {
+                display: none;
+            }
+
+            .error-card {
+                padding: 40px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="window">
+    <header class="top-bar">
+        <div class="brand-area">
+            <div class="traffic-lights">
+                <span class="red"></span>
+                <span class="yellow"></span>
+                <span class="green"></span>
+            </div>
+
+            <div class="logo">⬡</div>
+            <div class="brand">StockFlow</div>
+        </div>
+
+        <div class="role-badge">Protected Area</div>
+    </header>
+
+    <main class="content">
+        <section class="error-card">
+            <div class="lock">🔒</div>
+
+            <p class="code">ERROR 403</p>
+            <h1>Access Denied</h1>
+
+            <p class="message">
+                Your account does not have permission to access this
+                administration page.
+            </p>
+
+            <div class="notice">
+                Administrator privileges are required to manage products
+                and categories.
+            </div>
+
+            <div class="buttons">
+                <a href="/" class="button primary">Return to Dashboard</a>
+                <a href="/catalog" class="button secondary">Browse Catalogue</a>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
